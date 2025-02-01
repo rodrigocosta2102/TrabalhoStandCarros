@@ -60,3 +60,7 @@ class Carro:
             )
             return False
 
+      # Se todos os dados estiverem válidos
+        print("O carro foi cadastrado com sucesso.")
+        return True
+
