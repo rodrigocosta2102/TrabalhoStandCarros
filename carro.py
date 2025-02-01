@@ -36,3 +36,7 @@ class Carro:
       if not self.cor or self.cor not in Carro.lista_cores:
             print(f"Erro: A cor '{self.cor}' não é válida. Cores permitidas: {', '.join(Carro.lista_cores)}.")
             return False
+
+      if not isinstance(self.ano, int) or self.ano <= 0:
+            print("Erro: O ano deve ser um número inteiro positivo.")
+            return False
