@@ -52,3 +52,11 @@ class Carro:
       if not isinstance(self.disponibilidade, bool):
             print("Erro: A disponibilidade deve ser um valor booleano (True ou False).")
             return False
+
+      # Regex para a matrícula (AA-00-AA)
+        if not self.matricula or not re.fullmatch(r"[A-Z]{2}-\d{2}-[A-Z]{2}", self.matricula):
+            print(
+                "Erro: O campo 'matrícula' deve seguir o formato 'AA-00-AA', onde 'A' são letras maiúsculas e '0' são números."
+            )
+            return False
+
