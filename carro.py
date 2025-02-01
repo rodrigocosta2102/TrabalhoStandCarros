@@ -40,3 +40,7 @@ class Carro:
       if not isinstance(self.ano, int) or self.ano <= 0:
             print("Erro: O ano deve ser um número inteiro positivo.")
             return False
+
+      if not isinstance(self.preco, (int, float)) or self.preco <= 0:
+            print("Erro: O preço deve ser um número positivo.")
+            return False
