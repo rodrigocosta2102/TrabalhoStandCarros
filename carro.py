@@ -1,6 +1,7 @@
 # Classe para Carro
 class Carro:
-
+   lista_marcas = ["Mercedes", "BMW", "Bugatti", "Porsche", "Ferrari", "Lexus"]
+  
   def __init__(self, marca, modelo, cor, ano, preco, potencia, disponibilidade, matricula):
         self.marca = marca
         self.modelo = modelo
@@ -21,3 +22,12 @@ class Carro:
     def from_string(data_str):
         marca, modelo, cor, ano, preco, potencia, disponibilidade, matricula = data_str.strip().split(";")
         return Carro(marca, modelo, cor, int(ano), float(preco), int(potencia), disponibilidade == "True", matricula)
+
+    def is_valid(self):
+        if not self.marca or not self.modelo:
+            print("Erro: O carro deve ter uma marca e um modelo.")
+            return False
+
+        if self.marca not in Carro.lista_marcas:
+            print(f"Erro: A marca '{self.marca}' não é válida. Marcas permitidas: {', '.join(Carro.lista_marcas)}.")
+            return False
