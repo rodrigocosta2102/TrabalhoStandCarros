@@ -48,3 +48,7 @@ class Carro:
       if not isinstance(self.potencia, int) or self.potencia <= 0:
             print("Erro: A potência deve ser um número inteiro positivo.")
             return False
+
+      if not isinstance(self.disponibilidade, bool):
+            print("Erro: A disponibilidade deve ser um valor booleano (True ou False).")
+            return False
