@@ -58,3 +58,7 @@ def main():
             break
         else:
             print("Opção inválida, tente novamente.")
+
+# Executei a Func_Princ
+if __name__ == "__main__":
+    main()
