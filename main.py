@@ -24,6 +24,26 @@ def main():
             preco = input("Preço do Carro")
             potencia = int(input("Potência do Carro: "))
             disponibilidade = input("Vendido ou Disponível (True ou False): ")
+            matricula = input("Matrícula: ")
+
+            try:
+                ano = int(ano)
+                preco = float(preco)
+                potencia = int(potencia)
+                disponibilidade = disponibilidade.lower() == "true"
+
+                carro = Carro(marca, modelo, cor, ano, preco, potencia, disponibilidade, matricula)
+
+                # Validar carro antes de adicionar à lista
+                if carro.is_valid():
+                    carros.append(carro)
+                    print("Carro adicionado com sucesso.")
+                else:
+                    print("Falha ao adicionar o carro. Dados inválidos.")
+
+            except ValueError:
+                print("Erro: Verifique os valores de ano, preço, potência ou disponibilidade.")
+
 
         elif opcao == "2":
             if not carros:
