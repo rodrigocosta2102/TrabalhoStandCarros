@@ -16,9 +16,15 @@ def carregar_carros(ficheiro):
     try:
         with open(ficheiro, "r") as f:
             for linha in f:
-                carro = Carro.from_string(linha)
-                carros.append(carro)
-        print(f"Carros carregados de {ficheiro} com sucesso!")
+                try:
+                    carro = Carro.from_string(linha) #Criar um objeto através da string feita no ficheiro carro.py
+                    if carro.is_valid(): #Para validar o carro antes de guardar os dados
+                        carros.append(carro)
+                    else:
+                        print(f"Dados inválidos ignorados: {linha.strip()}")
+                except Exception as e:
+                    print(f"Erro ao processar linha: {linha.strip()} - {e}")
+        print(f"Carros carregados de '{ficheiro}' com sucesso!")
     except FileNotFoundError:
-        print(f"O ficheiro {ficheiro} não foi encontrado.")
+        print(f"O ficheiro '{ficheiro}' não foi encontrado.")
     return carros
