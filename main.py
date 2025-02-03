@@ -1,21 +1,25 @@
 # Importações
-from carro import Carro
-from persistencia import gravar_carros, carregar_carros
+from persistencia import gravar_carros, carregar_carros, gravar_stand, carregar_stand
 
-# Ficheiro para gravar ou carregar os carros
-FICHEIRO = "carros.txt"
+# Ficheiros para armazenar os dados
+FICHEIRO_CARROS = "carros.txt"
+FICHEIRO_STAND = "stand.txt"
 
 # Função Principal
 def main():
-    #Lista para histórico
-    carros = [] 
+    carros = []  # Lista para armazenar carros
+    stand_lista = []  # Lista para armazenar stands
 
     while True:
-        print("1. Adicionar Carro")
+        print("\n1. Adicionar Carro")
         print("2. Listar Carros")
         print("3. Gravar Carros")
         print("4. Carregar Carros")
-        print("5. Sair")
+        print("5. Adicionar Stand")
+        print("6. Listar Stands")
+        print("7. Gravar Stands")
+        print("8. Carregar Stands")
+        print("9. Sair")
         opcao = input("Escolha uma opção: ").strip()
 
         if opcao == "1":
@@ -35,18 +39,9 @@ def main():
                 print("Erro: Digite 'True' ou 'False'.")
 
             try:
-                ano = int(ano)
-                preco = float(preco)
-                potencia = int(potencia)
-
-                carro = Carro(marca, modelo, cor, ano, preco, potencia, disponibilidade, matricula)
-
-                # Validar carro antes de adicionar à lista
-                if carro.is_valid():
-                    carros.append(carro)
-                    print("Carro adicionado com sucesso!")
-                else:
-                    print("Falha ao adicionar o carro. Dados inválidos.")
+                carro = f"{marca};{modelo};{cor};{ano};{preco};{potencia};{disponibilidade};{matricula}"
+                carros.append(carro)
+                print("Carro adicionado com sucesso!")
 
             except ValueError:
                 print("Erro: Verifique os valores de ano, preço ou potência.")
@@ -54,22 +49,50 @@ def main():
         elif opcao == "2":
             if not carros:
                 print("Nenhum carro cadastrado.")
-            for carro in carros:
-                print(carro)
+            else:
+                print("Lista de Carros:")
+                for carro in carros:
+                    print(carro)
 
         elif opcao == "3":
-            gravar_carros(FICHEIRO, carros)
+            gravar_carros(FICHEIRO_CARROS, carros)
 
         elif opcao == "4":
-            carros = carregar_carros(FICHEIRO)
+            carros = carregar_carros(FICHEIRO_CARROS)
 
         elif opcao == "5":
+            nome = input("Nome do Stand: ").strip()
+            localizacao = input("Localização do Stand: ").strip()
+            contato = input("Contato do Stand (9 dígitos): ").strip()
+
+            if contato.isdigit() and len(contato) == 9:
+                stand = f"{nome};{localizacao};{contato}"
+                stand_lista.append(stand)
+                print("Stand adicionado com sucesso!")
+            else:
+                print("Erro: O contato deve ter exatamente 9 dígitos.")
+
+        elif opcao == "6":
+            if not stand_lista:
+                print("Nenhum stand cadastrado.")
+            else:
+                print("Lista de Stands:")
+                for stand in stand_lista:
+                    print(stand)
+
+        elif opcao == "7":
+            gravar_stand(FICHEIRO_STAND, stand_lista)
+
+        elif opcao == "8":
+            stand_lista = carregar_stand(FICHEIRO_STAND)
+
+        elif opcao == "9":
             print("Programa encerrado.")
             break
 
         else:
-            print(" Opção inválida, tente novamente.")
+            print("Opção inválida, tente novamente.")
 
-# Executar a Função Principal
+
 if __name__ == "__main__":
     main()
