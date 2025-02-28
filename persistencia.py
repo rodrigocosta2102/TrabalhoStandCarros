@@ -4,17 +4,12 @@ from carro import Carro
 from stand import Stand
 
 def gravar_carros(ficheiro, lista_carros):
-    if not lista_carros:
-        print("A lista de carros está vazia.")
-        return
+    with open(ficheiro, "w") as f:
+        for carro in lista_carros:
+            linha = f"{carro.marca}; {carro.modelo}; {carro.cor}; {carro.ano}; {carro.preco}; {carro.potencia}; {carro.disponibilidade}; {carro.matricula}\n"
+            f.write(linha)
+    print("💾 Carros gravados com sucesso.")
 
-    try:
-        with open(ficheiro, "w") as f:
-            for carro in lista_carros:
-                f.write(str(carro) + "\n")
-        print(f"Carros gravados em '{ficheiro}' com sucesso!")
-    except Exception as e:
-        print(f"Erro ao gravar carros: {e}")
 
 
 def carregar_carros(ficheiro):
@@ -22,32 +17,21 @@ def carregar_carros(ficheiro):
     try:
         with open(ficheiro, "r") as f:
             for linha in f:
-                try:
-                    carro = Carro.from_string(linha.strip())  # Criar objeto Carro
-                    if carro.is_valid():  # Validar carro antes de adicionar
-                        carros.append(carro)
-                    else:
-                        print(f"Dados inválidos ignorados: {linha.strip()}")
-                except Exception as e:
-                    print(f"Erro ao processar linha: {linha.strip()} - {e}")
-        print(f"Carros carregados de '{ficheiro}' com sucesso!")
+                marca, modelo, cor, ano, preco, potencia, disponibilidade, matricula = linha.strip().split("; ")
+                carro = Carro(marca, modelo, cor, int(ano), float(preco), int(potencia), disponibilidade == "True", matricula)
+                carros.append(carro)
+        print("📂 Carros carregados com sucesso.")
     except FileNotFoundError:
-        print(f"O ficheiro '{ficheiro}' não foi encontrado.")
+        print(f"⚠️ Ficheiro {ficheiro} não encontrado.")
     return carros
 
 
 def gravar_stand(ficheiro, lista_stands):
-    if not lista_stands:
-        print("A lista de stands está vazia.")
-        return
-
-    try:
-        with open(ficheiro, "w") as f:
-            for stand in lista_stands:
-                f.write(f"{stand.nome}, {stand.localizacao}, {stand.contato}\n")
-        print(f"Stands gravados em '{ficheiro}' com sucesso!")
-    except Exception as e:
-        print(f"Erro ao gravar stands: {e}")
+    with open(ficheiro, "w") as f:
+        for stand in lista_stands:
+            linha = f"{stand.nome}; {stand.localizacao}; {stand.contato}; {stand.email}; {stand.password}\n"
+            f.write(linha)
+    print("💾 Stands gravados com sucesso.")
 
 
 def carregar_stand(ficheiro):
@@ -55,10 +39,10 @@ def carregar_stand(ficheiro):
     try:
         with open(ficheiro, "r") as f:
             for linha in f:
-                stand = Stand.from_string(linha.strip())  # Criar objeto Stand
-                if stand:
-                    stands.append(stand)
-        print(f"Stands carregados de '{ficheiro}' com sucesso!")
+                nome, localizacao, contato, email, password = linha.strip().split("; ")
+                stand = Stand(nome, localizacao, contato, email, password)
+                stands.append(stand)
+        print("📂 Stands carregados com sucesso.")
     except FileNotFoundError:
-        print(f"O ficheiro '{ficheiro}' não foi encontrado.")
+        print(f"⚠️ Ficheiro {ficheiro} não encontrado.")
     return stands
