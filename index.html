@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BEM VINDO AO STAND</title>
+
+    <!-- Importação do Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/magilio" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            font-family: 'Magilio', sans-serif;
+            background-color: #457ab0;
+        }
+        .hero {
+            background: linear-gradient(to right, #0c7ffa, #04318a);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .hero h1 {
+            font-size: 3rem;
+        }
+        .hero p {
+            font-size: 1.2rem;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+        .stat {
+            background: #939294;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .stat i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .stat i:hover {
+            transform: scale(1.4) rotate(5deg);
+            color: #007bff;
+        }
+
+        .view-cars-btn {
+            background-color: #17992d;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .view-cars-btn:hover {
+            background-color: #128725;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="hero">
+        <h1>BEM VINDO AO STAND</h1>
+        <p>Encontre o carro dos seus sonhos com facilidade e rapidez!</p>
+        <a href="/carros" class="view-cars-btn">VER CARROS</a>
+    </div>
+
+    <div class="stats mt-4">
+        <div class="stat">
+            <i class="fas fa-car"></i>
+            <h3>{{ total_carros }}</h3>
+            <p>CARROS REGISTADOS</p>
+        </div>
+        <div class="stat">
+            <i class="fas fa-th-list"></i>
+            <h3>{{ total_marcas }}</h3>
+            <p>MARCAS CADASTRADAS</p>
+        </div>
+        <div class="stat">
+            <i class="fas fa-list-alt"></i>
+            <h3>{{ total_modelos }}</h3>
+            <p>MODELOS CADASTRADOS</p>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
