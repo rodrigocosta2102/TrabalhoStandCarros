@@ -84,29 +84,6 @@ class Carro:
 
     def editar_info(self):
         print("✏️ Edição de informações do carro")
-
-
-        while True:
-            nova_marca = input(f"Marca atual: {self.marca} ➡️ Nova marca (ENTER para manter): ").strip()
-            if not nova_marca:
-                nova_marca = self.marca
-            if nova_marca in Carro.marcas_modelos:
-                self.marca = nova_marca
-                break
-            else:
-                print(f"❌ Marca inválida. As marcas disponíveis são: {', '.join(Carro.lista_marcas)}.")
-
-
-        while True:
-            novo_modelo = input(f"Modelo atual: {self.modelo} ➡️ Novo modelo (ENTER para manter): ").strip()
-            if not novo_modelo:
-                novo_modelo = self.modelo
-            if novo_modelo in Carro.marcas_modelos[self.marca]:
-                self.modelo = novo_modelo
-                break
-            else:
-                print(f"❌ Modelo inválido para a marca {self.marca}.")
-
         while True:
             nova_cor = input(f"Cor atual: {self.cor} ➡️ Nova cor (ENTER para manter): ").strip()
             if not nova_cor:
@@ -200,7 +177,7 @@ def obter_modelo(marca):
         modelo = input(f"Modelo do Carro {modelos_validos}: ").strip()
         if Carro.validar_modelo(marca, modelo):
             return modelo
-        print(f"❌ Modelo inválido. Tente novamente com um modelo válido")
+        print("❌ Modelo inválido. Tente novamente.")
 
 
 def obter_cor():
