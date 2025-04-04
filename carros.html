@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LISTA DE CARROS</title>
+
+    <!-- Importação do Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script>
+        function toggleForm() {
+            var form = document.getElementById("form-carro");
+            form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #457ab0;
+        }
+        .container {
+            max-width: 900px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center mb-4">LISTA DE CARROS</h2>
+
+    <!-- Exibir mensagens de sucesso ou erro -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <div class="alert alert-dismissible fade show" role="alert">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- Tabela de carros -->
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Cor</th>
+                <th>Ano</th>
+                <th>Preço (€)</th>
+                <th>Potência (CV)</th>
+                <th>Matrícula</th>
+                <th>Disponível</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for carro in carros %}
+            <tr>
+                <td>{{ carro.marca }}</td>
+                <td>{{ carro.modelo }}</td>
+                <td>{{ carro.cor }}</td>
+                <td>{{ carro.ano }}</td>
+                <td>{{ carro.preco }}</td>
+                <td>{{ carro.potencia }}</td>
+                <td>{{ carro.matricula }}</td>
+                <td>
+                    {% if carro.disponibilidade %}
+                        <span class="badge bg-success">Sim</span>
+                    {% else %}
+                        <span class="badge bg-danger">Não</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('edit_carro', matricula=carro.matricula) }}" class="btn btn-sm btn-primary">Editar</a>
+                    <form action="{{ url_for('remove_carro', matricula=carro.matricula) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja remover este carro?')">
+                            Excluir
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Botão para abrir o formulário -->
+    <div class="btn-container">
+        <button class="btn btn-success" onclick="toggleForm()">NOVO CARRO</button>
+    </div>
+
+    <!-- Botão para voltar à página inicial -->
+    <div class="btn-container">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">ᐊ VOLTAR</a>
+    </div>
+
+    <!-- Formulário de Adicionar Carro (inicialmente escondido) -->
+    <div id="form-carro" style="display: none; margin-top: 20px;">
+        <h3 class="text-center">Adicionar Carro</h3>
+        <form action="{{ url_for('add_carro') }}" method="POST" class="p-3 border rounded bg-light">
+            <div class="mb-2">
+                <label for="marca" class="form-label">Marca:</label>
+                <input type="text" class="form-control" id="marca" name="marca" required>
+            </div>
+
+            <div class="mb-2">
+                <label for="modelo" class="form-label">Modelo:</label>
+                <input type="text" class="form-control" id="modelo" name="modelo" required>
+            </div>
+
+            <div class="mb-2">
+                <label for="cor" class="form-label">Cor:</label>
+                <input type="text" class="form-control" id="cor" name="cor" required>
+            </div>
+
+            <div class="mb-2">
+                <label for="ano" class="form-label">Ano:</label>
+                <input type="number" class="form-control" id="ano" name="ano" required>
+            </div>
+
+            <div class="mb-2">
+                <label for="preco" class="form-label">Preço (€):</label>
+                <input type="number" class="form-control" id="preco" name="preco" required>
+            </div>
+
+            <div class="mb-2">
+                <label for="potencia" class="form-label">Potência (CV):</label>
+                <input type="number" class="form-control" id="potencia" name="potencia" required>
+            </div>
+
+            <div class="mb-2">
+                <label for="matricula" class="form-label">Matrícula:</label>
+                <input type="text" class="form-control" id="matricula" name="matricula" required placeholder="AA-00-AA">
+            </div>
+
+            <div class="mb-2 form-check">
+                <input type="checkbox" class="form-check-input" id="disponibilidade" name="disponibilidade">
+                <label class="form-check-label" for="disponibilidade">Disponível</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Adicionar</button>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
